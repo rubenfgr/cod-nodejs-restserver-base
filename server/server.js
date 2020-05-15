@@ -1,4 +1,7 @@
+// @ts-ignore
 require('./config/config');
+// Using Node.js `require()`
+const mongoose = require('mongoose');
 
 const express = require('express')
 const app = express()
@@ -6,44 +9,23 @@ const bodyParser = require('body-parser')
 
 // .use ==> middleware ==> se ejecuta cada vez que lo hace el código
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // parse application/json
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 
-// Agregar registros
-app.get('/usuario', function (req, res) {
-    res.json('get usuario')
-});
+app.use(require('./routes/usuario'));
 
-app.post('/usuario', function (req, res) {
+// Mongoose
+mongoose.connect(process.env.URLDB, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false
+}, (err, res) => {
+    if (err) throw err;
 
-    let body = req.body;
-
-    if (body.nombre === undefined) {
-        res.status(400).json({
-            ok: false,
-            mensaje: 'El nombre es necesario'
-        });
-    } else {
-        res.json({
-            "persona": body
-        });
-    }
-});
-
-// Actualizar datos (PUT y PATCH)
-app.put('/usuario/:id', function (req, res) {
-
-    let id = req.params.id;
-    res.json({
-        id
-    });
-});
-
-// Borrar registros
-app.delete('/usuario/:id', function (req, res) {
-    res.json('get usuario')
+    console.log("Base de datos ONLINE");
 });
 
 app.listen(process.env.PORT, () => {
