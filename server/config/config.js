@@ -29,12 +29,3 @@ if (process.env.NODE_ENV === 'dev') {
 }
 
 process.env.URLDB = urlDB;
-
-
-// mongoDB Atlas
-// Usuario: rubenfgr
-// Contraseña: 4y4hEX2RVyTMU8uW
-// mongodb+srv://rubenfgr:4y4hEX2RVyTMU8uW@cafe-nxmxt.mongodb.net/cafe
-// VAR HEROKU: MONGO_URI="mongodb+srv://rubenfgr:4y4hEX2RVyTMU8uW@cafe-nxmxt.mongodb.net/cafe"
-
-// mongodb://localhost:27017/cafe
