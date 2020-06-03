@@ -8,7 +8,6 @@ const { OAuth2Client } = require('google-auth-library');
 const client = new OAuth2Client(process.env.CLIENT_ID);
 
 const Usuario = require('../models/usuario');
-const usuario = require('../models/usuario');
 
 const app = express();
 
@@ -89,6 +88,7 @@ app.post('/google', async (req, res) => {
             });
         })
 
+    // @ts-ignore
     Usuario.findOne({ email: googleUser.email }, (err, usuarioDB) => {
 
         if (err) {
@@ -99,6 +99,7 @@ app.post('/google', async (req, res) => {
         }
 
         if (usuarioDB) {
+            // @ts-ignore
             if (usuarioDB.google === false) {
                 res.status(400).json({
                     ok: false,
@@ -121,10 +122,15 @@ app.post('/google', async (req, res) => {
             // Si el usuario no existe en la BD
             let usuario = new Usuario();
 
+            // @ts-ignore
             usuario.nombre = googleUser.nombre;
+            // @ts-ignore
             usuario.email = googleUser.email;
+            // @ts-ignore
             usuario.img = googleUser.img;
+            // @ts-ignore
             usuario.google = true;
+            // @ts-ignore
             usuario.password = ':)';
 
             console.log(usuario);
